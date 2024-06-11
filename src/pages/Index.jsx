@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { motion } from 'framer-motion';
 import {
   Container,
   VStack,
@@ -44,21 +45,36 @@ const Index = () => {
             Add Task
           </Button>
         </VStack>
-        <List width="100%">
-          {tasks.map((task, index) => (
-            <ListItem key={index} display="flex" justifyContent="space-between" alignItems="center">
-              {task}
-              <IconButton
-                aria-label="Delete task"
-                icon={<FaTrash />}
-                onClick={() => handleDeleteTask(index)}
-                size="sm"
-                colorScheme="red"
-                variant="ghost"
-              />
-            </ListItem>
-          ))}
-        </List>
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          <List width="100%">
+            {tasks.map((task, index) => (
+              <motion.div
+                key={index}
+                initial={{ x: -10, opacity: 0 }}
+                animate={{ x: 0, opacity: 1 }}
+                exit={{ x: 10, opacity: 0 }}
+                transition={{ duration: 0.2 }}
+              >
+                <ListItem display="flex" justifyContent="space-between" alignItems="center">
+                  {task}
+                  <IconButton
+                    aria-label="Delete task"
+                    icon={<FaTrash />}
+                    onClick={() => handleDeleteTask(index)}
+                    size="sm"
+                    colorScheme="red"
+                    variant="ghost"
+                  />
+                </ListItem>
+              </motion.div>
+            ))}
+          </List>
+        </motion.div>
       </VStack>
     </Container>
   );
